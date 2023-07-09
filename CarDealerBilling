@@ -1,0 +1,82 @@
+package Rent;
+import java.util.Scanner;
+public class CarDealerBilling {
+	 public static void main(String[] args) {
+	        Scanner scanner = new Scanner(System.in);
+
+	        String[] carModels = {
+	            "Polo Trendline",
+	            "Polo Highline",
+	            "Virtus Trendline",
+	            "Virtus Highline",
+	            "Taigun Trendline",
+	            "Taigun Highline",
+	            "Taigun Topline"
+	        };
+
+	        int[] carPrices = {
+	            870000,
+	            1009000,
+	            1105000,
+	            1308000,
+	            1489000,
+	            1542000,
+	            1771000
+	        };
+
+	        int[] fees = {
+	            113990,
+	            47300,
+	            11000,
+	            15000
+	        };
+
+	        System.out.println("Car Models:");
+	        for (int i = 0; i < carModels.length; i++) {
+	            System.out.println(i + 1 + ". " + carModels[i]+".."+carPrices[i]);
+	        }
+
+	        System.out.print("\nSelect car model (Enter the corresponding number): ");
+	        int carIndex = scanner.nextInt() - 1;
+
+	        System.out.print("Do you need Insurance (yes/no): ");
+	        String insuranceChoice = scanner.next();
+
+	        System.out.print("Do you need Additional Accessories (yes/no): ");
+	        String accessoriesChoice = scanner.next();
+
+	        System.out.print("Dealer discount (in percentage or 0 if no discount): ");
+	        double discount = scanner.nextDouble();
+
+	        int showroomPrice = carPrices[carIndex];
+	        int totalCost = showroomPrice;
+
+	        if (insuranceChoice.equalsIgnoreCase("yes")) {
+	            totalCost += fees[1];
+	        }
+
+	        if (accessoriesChoice.equalsIgnoreCase("yes")) {
+	            totalCost += fees[3];
+	        }
+
+	        if (insuranceChoice.equalsIgnoreCase("yes") || accessoriesChoice.equalsIgnoreCase("yes")) {
+	            if (discount > 0 && discount < 20000) {
+	                totalCost -= (discount / 100) * showroomPrice;
+	            } else if (discount >= 20000) {
+	                totalCost -= 20000;
+	                System.out.println("Maximum discount of 30,000 applied.");
+	            } else if (discount < 0) {
+	                System.out.println("Discount cannot be negative. No discount applied.");
+	            }
+	        } else {
+	            if (discount > 0) {
+	                System.out.println("Cannot apply discount without opting for insurance or additional accessories.");
+	                discount = 0;
+	            }
+	        }
+
+	        totalCost += fees[0] + fees[2];
+
+	        System.out.println("\nTotal cost: " + totalCost);
+	    }
+}
